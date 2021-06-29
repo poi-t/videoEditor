@@ -5,7 +5,9 @@
 #include <QInputDialog>
 #include "QxtSpanSlider.h"
 
+//避免中文乱码
 #pragma execution_character_set("utf-8")
+
 
 videoEditor::videoEditor(QWidget *parent)
     : QWidget(parent), m_times(0), m_LeftMove(true), m_begin(false)
@@ -14,14 +16,16 @@ videoEditor::videoEditor(QWidget *parent)
 
     m_pPlayer = NULL;
     m_pProcess = NULL;
-    m_pTimer = new QTimer(this);     //用于视频播放时其他组件的同步
-    m_pTimer->start(100);
 
     m_pInstance = libvlc_new(0, NULL);
     if (m_pInstance == NULL) {
         QMessageBox::information(this, "提示", "初始化失败");
         return;
     }
+
+    //用于视频播放时其他组件的同步的定时器
+    m_pTimer = new QTimer(this);     
+    m_pTimer->start(100);
 
     ui.btnPlay->setStyleSheet("background-image:url(:/videoEditor/pictures/pause.png)");
     ui.btnMute->setStyleSheet("background-image:url(:/videoEditor/pictures/volume.png)");
@@ -32,6 +36,7 @@ videoEditor::videoEditor(QWidget *parent)
     //防止双向滑动器重叠
     ui.timeSlider->setHandleMovementMode(QxtSpanSlider::NoOverlapping);
 
+    //连接槽函数
     connect(ui.volumeSlider, &QSlider::valueChanged, this, &videoEditor::on_SetVolume);
     connect(m_pTimer, &QTimer::timeout, this, &videoEditor::on_SetVideoTime);
     connect(ui.timeSlider, &QxtSpanSlider::lowerPositionChanged, this, &videoEditor::on_LeftPointSeek);
@@ -52,6 +57,7 @@ void videoEditor::on_btnLoadVideo_clicked()
     m_fileName.replace(":/", ":\\");
     setWindowTitle(m_fileName);
 
+    //创建一个可播放的媒体
     libvlc_media_t* pMedia = libvlc_media_new_path(m_pInstance, m_fileName.toStdString().c_str());
     if (pMedia == NULL)
     {
@@ -59,6 +65,7 @@ void videoEditor::on_btnLoadVideo_clicked()
         return;
     }
 
+    //获取视频时长
     libvlc_media_parse(pMedia);
     libvlc_time_t len = libvlc_media_get_duration(pMedia);
     if (len == -1)
@@ -68,6 +75,7 @@ void videoEditor::on_btnLoadVideo_clicked()
     }
     m_times = len / 1000;
 
+    //创建一个VLC媒体播放器
     m_pPlayer = libvlc_media_player_new_from_media(pMedia);
     if (m_pPlayer == NULL)
     {
