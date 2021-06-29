@@ -2,7 +2,7 @@
     <qresource prefix="/videoEditor">
         <file>pictures/mute.png</file>
         <file>pictures/pause.png</file>
-        <file>pictures/play.png</file>
         <file>pictures/volume.png</file>
+        <file>pictures/play.png</file>
     </qresource>
 </RCC>
