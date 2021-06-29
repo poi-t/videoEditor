@@ -41,7 +41,7 @@ public:
     {
         if (videoEditorClass->objectName().isEmpty())
             videoEditorClass->setObjectName(QString::fromUtf8("videoEditorClass"));
-        videoEditorClass->resize(586, 458);
+        videoEditorClass->resize(586, 432);
         widget = new QWidget(videoEditorClass);
         widget->setObjectName(QString::fromUtf8("widget"));
         widget->setGeometry(QRect(0, 0, 580, 300));

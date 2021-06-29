@@ -1,13 +1,4 @@
-﻿  uic videoEditor.ui
-  rcc videoEditor.qrc
-  moc videoEditor.h
-  moc QxtSpanSlider.h
-  moc QxtSpanSlider_p.h
-  QxtSpanSlider.cpp
+﻿  rcc videoEditor.qrc
   videoEditor.cpp
-  main.cpp
   qrc_videoEditor.cpp
-  moc_videoEditor.cpp
-  moc_QxtSpanSlider.cpp
-  moc_QxtSpanSlider_p.cpp
   videoEditor.vcxproj -> C:\Users\a2547\videoEditor\videoEditor\x64\Release\videoEditor.exe
